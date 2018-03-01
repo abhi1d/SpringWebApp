@@ -21,10 +21,12 @@ public class SpringWebAppApplicationTests {
 	@Autowired
 	private I18NService i18NService;
 
+	
 	@Test
 	public void testMessageByLocaleService() throws Exception {
 		String exceptionResult = "Abhishek";
 		String messageId = "index.main.callout";
+		
 		String actual = i18NService.getMessage(messageId);
 		Assert.assertEquals("The actual and expected Strings don't match", exceptionResult, actual);
 	}
