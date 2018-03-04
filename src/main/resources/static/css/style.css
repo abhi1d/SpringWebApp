@@ -13,6 +13,12 @@ body {
     background: linear-gradient(to left, #085078 , #85D8CE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+.payload-container{
+	padding:120px 50px 120px 50px;
+	background-color:white;
+	border-radius:15px;
+	margin:250px;
+}
 
 .starter-template {
     padding: 40px 15px;
