@@ -7,7 +7,7 @@
   <a class="navbar-brand" href="#">Logo</a>
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" th:text="#{navbar.home.text}" href="#">Home</a>
+      <a class="nav-link" th:text="#{navbar.home.text}" href="/">Home</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" th:text = "#{navbar.about.text}" href="/about">About</a>
@@ -17,6 +17,11 @@
          <a class="nav-link" th:text = "#{navbar.contact.text}" href="/contact"></a>
      </li>
   </ul>
+   <ul class="nav navbar-nav navbar-right ml-auto" id = "ml_auto" >
+        <li>
+            <a th:href="@{/login}" th:text="#{navbar.login.text}" >Log In</a>
+         </li>
+   </ul>              
 </nav>
 </div>
 </body>
