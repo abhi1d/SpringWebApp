@@ -17,11 +17,18 @@
          <a class="nav-link" th:text = "#{navbar.contact.text}" href="/contact"></a>
      </li>
   </ul>
-   <ul class="nav navbar-nav navbar-right ml-auto" id = "ml_auto" >
-        <li>
-            <a th:href="@{/login}" th:text="#{navbar.login.text}" >Log In</a>
-         </li>
-   </ul>              
+  <ul class="nav navbar-nav navbar-right ml-auto" id = "ml_auto">
+                          <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                        <button type = "submit"  th:href="@{/login}" th:text="#{navbar.login.text}"  class="btn btn-success"></button>
+                    </li>
+                    <li th:if="${#authorization.expression('isAuthenticated()')}">
+                        <form id="f" th:action="@{/logout}" method="post" role="form" class="navbar-form">
+                            <button type="submit" th:text="#{navbar.logout.text}" class="btn btn-danger" ></button>
+                        </form>
+                    </li>
+   </ul>
+  
+   
 </nav>
 </div>
 </body>
