@@ -5,13 +5,12 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-/**
- * Created by tedonema on 28/03/2016.
- */
+import com.devopsbuddy.enums.PlansEnum;
+
 @Entity
 public class Plan implements Serializable {
 
-	/** The Serial Version UID for Serializable classes. */
+	/** The Serial Version UID for Serializable classes. **/
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,6 +23,10 @@ public class Plan implements Serializable {
 
 	}
 
+	public Plan(PlansEnum plansEnum) {
+       this.id = plansEnum.getId();
+       this.name = plansEnum.getPlanName();
+	} 
 	public int getId() {
 		return id;
 	}

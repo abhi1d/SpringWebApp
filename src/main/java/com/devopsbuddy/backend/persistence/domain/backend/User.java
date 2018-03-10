@@ -1,24 +1,15 @@
 package com.devopsbuddy.backend.persistence.domain.backend;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 public class User implements Serializable, UserDetails {
@@ -34,12 +25,12 @@ public class User implements Serializable, UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(unique = true)
+
 	private String username;
 
 	private String password;
 
-	@Column(unique = true)
+
 	private String email;
 
 	@Column(name = "first_name")
@@ -83,6 +74,12 @@ public class User implements Serializable, UserDetails {
 		return username;
 	}
 
+	
+	
+	
+	
+	
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -173,6 +170,13 @@ public class User implements Serializable, UserDetails {
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		 Set<GrantedAuthority> authorities = new HashSet<>();
+		 userRoles.forEach(ur -> authorities.add((GrantedAuthority) new Authority(ur.getRole().getName())));
+		return authorities;
+	}
+
 
 	public String getPassword() {
 		return password;
@@ -216,10 +220,5 @@ public class User implements Serializable, UserDetails {
 		return (int) (id ^ (id >>> 32));
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }
