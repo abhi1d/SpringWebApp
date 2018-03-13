@@ -1,5 +1,6 @@
 package com.devopsbuddy.config;
-import com.devopsbuddy.backend.service.UserSecurityService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +21,7 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserSecurityService userSecurityService;
-
+   
     @Autowired
     private Environment env;
 
@@ -61,14 +60,56 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    	  auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-              
-        
-    }    
+        auth.inMemoryAuthentication().withUser("abhi").password("12345").roles("USER");
+                
+    }
     
-	@SuppressWarnings("deprecation")
-	@Bean
-	public static NoOpPasswordEncoder passwordEncoder() {
-		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-	}
+@SuppressWarnings("deprecation")
+@Bean
+public static NoOpPasswordEncoder passwordEncoder() {
+	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

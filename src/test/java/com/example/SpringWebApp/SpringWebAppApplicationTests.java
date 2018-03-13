@@ -9,11 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.devopsbuddy.SpringWebAppApplication;
+import com.devopsbuddy.DevopsbuddyApplication;
 import com.devopsbuddy.web.i18n.I18NService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringWebAppApplication.class)
+@ContextConfiguration(classes = DevopsbuddyApplication.class)
 @WebAppConfiguration
 
 public class SpringWebAppApplicationTests {
