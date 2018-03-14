@@ -20,6 +20,7 @@ import com.devopsbuddy.backend.persistence.domain.backend.User;
 import com.devopsbuddy.backend.persistence.repositories.UserRepository;
 import com.devopsbuddy.utils.UserRepositoryCommandLineRunner;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -35,18 +36,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment env;
 
-
+    //Random Encryption salt
+ private static final String SALT = "dsfgadgasdgagfsddfgsdf";
     private static final Logger log = 
 			LoggerFactory.getLogger(UserRepositoryCommandLineRunner.class);
 
-    
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder1() {
+    	return new BCryptPasswordEncoder(12,new SecureRandom(SALT.getBytes()));
+    }
 	 @Autowired 
 	 private UserDetailsService userDetailsService;
 	 
-	 @Autowired
-	 public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {    
-		 auth.userDetailsService(userDetailsService).passwordEncoder(passwordencoder());
-	 } 
+	
 	 
 
 
@@ -85,7 +87,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    		
+    	
+    	auth.userDetailsService(userDetailsService)
+    	.passwordEncoder(passwordEncoder1());
     	                
     }
     
@@ -95,10 +99,7 @@ public static NoOpPasswordEncoder passwordEncoder() {
 	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 }
 
-@Bean(name="passwordEncoder")
-public PasswordEncoder passwordencoder(){
- return new BCryptPasswordEncoder();
-}
+
 
 }
 

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.devopsbuddy.backend.persistence.domain.backend.User;
@@ -27,6 +28,10 @@ public class UserRepositoryCommandLineRunner implements CommandLineRunner{
 	@Autowired
 	private UserRolesRepository userRolesRepository;
 	
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	@Override
 	public void run(String... arg0) throws Exception {
 		
@@ -38,7 +43,12 @@ public class UserRepositoryCommandLineRunner implements CommandLineRunner{
 		User user = new User();
 		user.setEmail("abhi@gmail.com");
 		user.setEnabled(1);
-		user.setPassword("abc123");
+		String password = "abc123";
+		//encryption of the password
+		String encryptedPassword = passwordEncoder.encode(password);
+		
+		
+		user.setPassword(encryptedPassword);
 		user.setUserName("abhi");
 		
 		userRepository.save(user);
