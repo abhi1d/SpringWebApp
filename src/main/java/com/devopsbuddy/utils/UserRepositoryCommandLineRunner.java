@@ -26,20 +26,20 @@ public class UserRepositoryCommandLineRunner implements CommandLineRunner{
 	public void run(String... arg0) throws Exception {
 		
 		
-		
-		User user = new User("Jill", "Admin");
-		userRepository.save(user);
-		log.info("New User is created : " + user);
-		
 		User user1 = new User("Abhi","Admin");
 		userRepository.save(user1);
-		log.info("New User is created : " + user);
+		log.info("New User is created : " + user1);
 		
 		Optional<User> userWithIdOne = userRepository.findById(1L);
 		log.info("User is retrived : " + userWithIdOne);
 
 		List<User> users = userRepository.findAll();
-		log.info("All Users : " + users);			
+		
+		
+		for(User s : users)
+		{
+			log.info("Users  :   "  +  s.geName());
+		}
 	}
 	
 }
