@@ -11,7 +11,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.devopsbuddy.backend.persistence.domain.backend.User;
 import com.devopsbuddy.backend.persistence.repositories.UserRepository;
@@ -35,12 +38,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger log = 
 			LoggerFactory.getLogger(UserRepositoryCommandLineRunner.class);
-	
-	@Autowired
-	private UserRepository userRepository;
+
     
-    
-   
+	 @Autowired 
+	 private UserDetailsService userDetailsService;
+	 
+	 @Autowired
+	 public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {    
+		 auth.userDetailsService(userDetailsService).passwordEncoder(passwordencoder());
+	 } 
+	 
+
 
     /** Public URLs. */
     private static final String[] PUBLIC_MATCHERS = {
@@ -77,23 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    	
-    	 Optional<User> userWithIdOne = userRepository.findById(1L);
-    		log.info("User is retrived : " + userWithIdOne);
-
-    		List<User> users = userRepository.findAll();
-    		String user1 = "xx";
-    		
-    		for(User s : users)
-    		{
-
-    	        user1 = s.geName();
-
-    		}
-    		
-
-    	        auth.inMemoryAuthentication().withUser(user1).password("12345").roles("USER");
-
     		
     	                
     }
@@ -103,6 +94,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 public static NoOpPasswordEncoder passwordEncoder() {
 	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 }
+
+@Bean(name="passwordEncoder")
+public PasswordEncoder passwordencoder(){
+ return new BCryptPasswordEncoder();
+}
+
 }
 
 

@@ -10,7 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.devopsbuddy.backend.persistence.domain.backend.User;
+import com.devopsbuddy.backend.persistence.domain.backend.UserRole;
 import com.devopsbuddy.backend.persistence.repositories.UserRepository;
+import com.devopsbuddy.backend.persistence.repositories.UserRolesRepository;
 
 
 @Component
@@ -22,24 +24,55 @@ public class UserRepositoryCommandLineRunner implements CommandLineRunner{
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private UserRolesRepository userRolesRepository;
+	
 	@Override
 	public void run(String... arg0) throws Exception {
 		
 		
-		User user1 = new User("Abhi","Admin");
-		userRepository.save(user1);
-		log.info("New User is created : " + user1);
+		/*
+		 * Insert Values into USERS
+		 */
+		
+		User user = new User();
+		user.setEmail("abhi@gmail.com");
+		user.setEnabled(1);
+		user.setPassword("abc123");
+		user.setUserName("abhi");
+		
+		userRepository.save(user);
+		log.info("New User is created : " + user);
 		
 		Optional<User> userWithIdOne = userRepository.findById(1L);
 		log.info("User is retrived : " + userWithIdOne);
 
-		List<User> users = userRepository.findAll();
+		List<User> users = (List<User>) userRepository.findAll();
+	    
+		 log.info("Users : " + users);
 		
-		
-		for(User s : users)
-		{
-			log.info("Users  :   "  +  s.geName());
-		}
+	   
+		/*
+		 * Insert values into UserRole 
+		 */
+		 
+		 
+		 UserRole user_role = new UserRole();
+		 user_role.setRole("ADMIN");
+		 user_role.setUserid(1L);
+		 userRolesRepository.save(user_role);
+	    
+		 log.info("New User is created : " + user_role);
+			
+		 Optional<UserRole> userWithIdOne1 = userRolesRepository.findById(1L);
+		log.info("User is retrived : " + userWithIdOne1);
+
+		List<UserRole> user_roles = (List<UserRole>) userRolesRepository.findAll();
+		    
+		 log.info("Users : " + user_roles);
+			
+		 
+		 
 	}
 	
 }
