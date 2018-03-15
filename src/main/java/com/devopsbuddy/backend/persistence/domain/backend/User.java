@@ -14,13 +14,13 @@ public class User implements Serializable {
     @Column(name="userid")
     private Long userId;
 
-	@Column(name = "username")
+	@Column(unique = true)
     private String userName;   
 
 	@Column(name = "password")
     private String password;   
 
-	@Column(name = "email")
+	@Column(unique = true)
     private String email;
     
 	@Column(name ="enabled")
